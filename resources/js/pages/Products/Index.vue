@@ -2,6 +2,7 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch, computed, onMounted, onUnmounted } from 'vue';
 import MainLayout from '@/layouts/MainLayout.vue';
+import CategorySelect from '@/components/CategorySelect.vue';
 
 interface Product {
     id: number;
@@ -222,19 +223,11 @@ watch(searchQuery, () => {
                         <label class="mb-2 block text-sm font-medium text-gray-700">
                             Category
                         </label>
-                        <select
+                        <CategorySelect 
                             v-model="selectedCategory"
-                            class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                            <option value="">All Categories</option>
-                            <option
-                                v-for="category in categories"
-                                :key="category"
-                                :value="category"
-                            >
-                                {{ category }}
-                            </option>
-                        </select>
+                            :categories="categories"
+                            @update:modelValue="filterProducts()"
+                        />
                     </div>
                 </div>
                 
